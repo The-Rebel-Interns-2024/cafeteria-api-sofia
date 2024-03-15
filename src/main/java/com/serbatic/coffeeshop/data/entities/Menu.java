@@ -1,12 +1,10 @@
-package com.serbatic.Coffee_Shop.Entities;
+package com.serbatic.coffeeshop.data.entities;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Set;
 
 @Entity
 @Table(name = "menus")
@@ -26,14 +24,14 @@ public class Menu {
     private LocalDate menuDate;
 
     @Column(name = "dishes")
-    @Schema(description = "Dishes of the menu")
-    private String[] dishes;
+    @Schema(description = "Dish of the menu")
+    private String dish;
 
-    public Menu(Long id, Double menuPrice, LocalDate menuDate, String[] dishes) {
+    public Menu(Long id, Double menuPrice, LocalDate menuDate, String dish) {
         this.id = id;
         this.menuPrice = menuPrice;
         this.menuDate = menuDate;
-        this.dishes = dishes;
+        this.dish = dish;
     }
 
     public Menu() {
@@ -63,12 +61,12 @@ public class Menu {
         this.menuDate = menuDate;
     }
 
-    public String[] getDishes() {
-        return dishes;
+    public String getDish() {
+        return dish;
     }
 
-    public void setDishes(String[] dishes) {
-        this.dishes = dishes;
+    public void setDish(String dish) {
+        this.dish = dish;
     }
 
     @Override
@@ -77,7 +75,7 @@ public class Menu {
                 "id=" + id +
                 ", menuPrice=" + menuPrice +
                 ", menuDate=" + menuDate +
-                ", dishes=" + Arrays.toString(dishes) +
+                ", dishes=" + dish +
                 '}';
     }
 }

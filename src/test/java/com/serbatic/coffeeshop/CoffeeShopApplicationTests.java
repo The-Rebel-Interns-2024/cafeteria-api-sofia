@@ -1,4 +1,4 @@
-package com.serbatic.Coffee_Shop;
+package com.serbatic.coffeeshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

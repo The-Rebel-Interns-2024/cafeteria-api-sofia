@@ -1,16 +1,17 @@
-package com.serbatic.Coffee_Shop.Services;
+package com.serbatic.coffeeshop.business.services;
 
 
-import com.serbatic.Coffee_Shop.Entities.Menu;
-import com.serbatic.Coffee_Shop.Repositories.MenuRepository;
+import com.serbatic.coffeeshop.data.entities.Menu;
+import com.serbatic.coffeeshop.data.repositories.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MenuServiceImpl implements GenericService<Menu> {
+public class MenuServiceImpl implements MenuService<Menu> {
 
     @Autowired
     MenuRepository menuRep;
@@ -39,5 +40,10 @@ public class MenuServiceImpl implements GenericService<Menu> {
     @Override
     public void delete(Long id) {
         menuRep.deleteById(id);
+    }
+
+    @Override
+    public List<Menu> getCurrentMenu(){
+       return menuRep.findByMenuDate(LocalDate.now());
     }
 }

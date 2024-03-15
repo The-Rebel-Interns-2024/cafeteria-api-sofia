@@ -1,4 +1,4 @@
-package com.serbatic.Coffee_Shop;
+package com.serbatic.coffeeshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,8 @@
-package com.serbatic.Coffee_Shop.Controllers;
+package com.serbatic.coffeeshop.presentation.controllers;
 
-import com.serbatic.Coffee_Shop.Entities.Menu;
-import com.serbatic.Coffee_Shop.Services.GenericService;
+import com.serbatic.coffeeshop.presentation.dto.DishDTO;
+import com.serbatic.coffeeshop.data.entities.Menu;
+import com.serbatic.coffeeshop.business.services.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,14 +20,20 @@ import java.util.List;
 public class MenuController {
 
     @Autowired
-    GenericService<Menu> menuService;
+    MenuService<Menu> menuService;
 
     @GetMapping("/menus")
     @Operation(
-            summary = "Show all menus"
+            summary = "Show current menu"
     )
-    public List<Menu> findAllMenus() {
-        return menuService.findAll();
+    public List<DishDTO> findAllMenus() {
+        List<DishDTO> dishes = new ArrayList<>();
+        List<Menu> menus = menuService.getCurrentMenu();
+        for (Menu menu : menus) {
+            DishDTO dish = new DishDTO(menu.getDish(), menu.getMenuPrice());
+            dishes.add(dish);
+        }
+        return dishes;
     }
 
     @GetMapping("/menus/{id}")
@@ -79,8 +87,7 @@ public class MenuController {
         Menu updateMenu = menuService.findById(id);
         if (updateMenu != null && updateMenu.getId() == menu.getId()) {
             updateMenu.setMenuDate(menu.getMenuDate());
-            updateMenu.setDishes(menu.getDishes());
-            updateMenu.setMenuPrice(menu.getMenuPrice());
+            updateMenu.setDish(menu.getDish());
             return ResponseEntity.ok(menuService.save(updateMenu));
         } else {
             return ResponseEntity.notFound().build();
